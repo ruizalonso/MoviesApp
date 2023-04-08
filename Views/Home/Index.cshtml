@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MoviesApp.Models.Movie>
+
+@{
+    ViewData["Title"] = "Pelicuas Favorias";
+    string defaultImage = "https://i.pinimg.com/originals/4b/46/69/4b46698de2f0bee16ca13c371c88719d.png";
+}
+<div class="input-group py-3 d-flex justify-content-center">
+    <form class="form-inline">
+        <div class="input-group">
+            <input type="text" class="form-control" required autocomplete="off" name="name" placeholder="Top Gun">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" data-toggle="tooltip" data-placement="bottom" title="Busca por nombre o título"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@{
+    if (!string.IsNullOrEmpty(@ViewBag.SearchResults))
+    {
+        <small class="form-text text-muted">Resultados de busqueda para <strong>@ViewBag.SearchResults</strong></small>
+    }
+}
+
+<hr />
+<div class="row d-flex justify-content-center">
+    @{ if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                var poster = (@item.Poster != "N/A") ? item.Poster : defaultImage;
+
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="card shadow-sm bg-white rounded my-3">
+                        <a asp-action="Details" asp-route-id="@item.imdbID">
+                            <img class="rounded img-fluid card-img-top cover-film" src="@poster" alt="@item.Title">
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title"><a class="text-decoration-none text-dark" asp-action="Details" asp-route-id="@item.imdbID"> @item.Title </a></h6>
+                        </div>
+                        <div class="card-footer text-center align-items-center">
+                            <small class="text-white font-weight-light badge badge-dark">@item.Year</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <small class="form-text text-muted">No se encontraron películas</small>
+        }
+    }
+</div>

@@ -1,0 +1,32 @@
+﻿@model MoviesApp.Models.Movie
+
+@{
+    ViewData["Title"] = @Model.Title;
+    string defaultImage = "https://i.pinimg.com/originals/4b/46/69/4b46698de2f0bee16ca13c371c88719d.png";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+    </ol>
+</nav>
+
+
+<div class="media m-4 row">
+    @{ 
+        var poster = (Model.Poster != "N/A") ? Model.Poster : defaultImage;
+    }
+    <img class="rounded align-self-start mr-3 cover-film" src="@poster" alt="@Model.Title">
+    <div class="media-body mt-4">
+        <h5>@Model.Title</h5>
+        <p>@Model.Plot</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Año</strong> @Model.Year</li>
+            <li class="list-group-item"><strong>Genero</strong> @Model.Genre</li>
+            <li class="list-group-item"><strong>Director</strong> @Model.Director</li>
+            <li class="list-group-item"><strong>Actores</strong> @Model.Actors</li>
+            <li class="list-group-item"><strong>Rating</strong> @Model.imdbRating</li>
+        </ul>
+    </div>
+</div>
